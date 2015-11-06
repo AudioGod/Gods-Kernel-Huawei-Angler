@@ -41,8 +41,8 @@ function clean_all {
 		rm -rf $MODULES_DIR/*
 		cd ~/kernels/Gods-Kernel-Huawei-Angler/out/kernel
 		rm -rf $DTBIMAGE
-		#git reset --hard > /dev/null 2>&1
-		#git clean -f -d > /dev/null 2>&1
+		git reset --hard > /dev/null 2>&1
+		git clean -f -d > /dev/null 2>&1
 		cd $KERNEL_DIR
 		echo
 		make clean && make mrproper
