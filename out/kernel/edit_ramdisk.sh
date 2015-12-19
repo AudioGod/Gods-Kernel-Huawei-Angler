@@ -45,20 +45,17 @@ if [ "$found" != 'run-parts /system/etc/init.d' ]; then
         echo "    group root" >> /tmp/ramdisk/init.rc
 fi
 
-#copy custom init.shamu.rc
+#copy custom fstab.angler
 cp /tmp/fstab.shamu /tmp/ramdisk/fstab.angler
 chmod 750 /tmp/ramdisk/fstab.angler
+
+#copy custom init.angler.rc
+cp /tmp/init.angler.rc /tmp/ramdisk/init.angler.rc
+chmod 750 /tmp/ramdisk/init.angler.rc
 
 #Gain write access on /system
 if  grep -qr ro.secure=1 /tmp/ramdisk/default.prop; then
  sed -i "s/ro.secure=1/ro.secure=0/" /tmp/ramdisk/default.prop
-fi
-
-if  grep -qr verity_load_state /tmp/ramdisk/init.angler.rc; then
- sed -i "s/verity_load_state/#verity_load_state/" /tmp/ramdisk/init.angler.rc
-fi
-if  grep -qr verity_update_state /tmp/ramdisk/init.angler.rc; then
- sed -i "s/verity_update_state/#verity_update_state/" /tmp/ramdisk/init.angler.rc
 fi
 
 
