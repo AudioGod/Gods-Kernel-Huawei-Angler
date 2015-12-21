@@ -39,6 +39,7 @@ ZIMAGE_DIR="${HOME}/kernels/Gods-Kernel-Huawei-Angler/arch/arm64/boot/"
 # Functions
 function clean_all {
 		rm -rf $MODULES_DIR/*
+		rm -rf $ZIP_MOVE/*
 		cd ~/kernels/Gods-Kernel-Huawei-Angler/out/kernel
 		rm -rf $DTBIMAGE
 		git reset --hard > /dev/null 2>&1
