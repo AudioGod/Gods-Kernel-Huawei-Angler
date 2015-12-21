@@ -3,6 +3,8 @@ rm .version
 # Bash Color
 green='\033[01;32m'
 red='\033[01;31m'
+cyan='\033[01;36m'
+blue='\033[01;34m'
 blink_red='\033[05;31m'
 restore='\033[0m'
 
@@ -84,33 +86,51 @@ DATE_START=$(date +"%s")
 
 
 echo -e "${green}"
-echo "------------------------------------------"
-echo "Initiatig To Compile $BASE_GK_VER$VER$TC  "
-echo "------------------------------------------"
+echo "--------------------------------------------------------"
+echo "Wellcome !!!   Initiatig To Compile $BASE_GK_VER$VER    "
+echo "--------------------------------------------------------"
 echo -e "${restore}"
 
-while read -p "Select Desired Toolchain for compiling God's Kernel UBERTC(1) or SaberMod(2) or Linaro(3)? " echoice
+echo -e "${cyan}"
+while read -p "Plese Select Desired Toolchain for compiling God's Kernel
+
+UBERTC-6.0---->(1)
+
+UBERTC-4.9---->(2)
+
+SaberMod-6.0-->(3)
+
+Linaro-5.2---->(4)
+
+" echoice
 do
 case "$echoice" in
 	1 )
-		export CROSS_COMPILE=${HOME}/kernels/aarch64-linux-android-4.9-UBERTC/bin/aarch64-linux-android-
-		TC="UBER"
+		export CROSS_COMPILE=${HOME}/kernels/aarch64-linux-android-6.0-UBERTC/bin/aarch64-linux-android-
+		TC="UBER-6.0"
 		echo
-		echo "Compiling Using UBERTC Toolchain"
+		echo "Compiling God's Kernel Using UBERTC-6.0 Toolchain"
 		break
 		;;
 	2 )
-		export CROSS_COMPILE=${HOME}/kernels/aarch64-linux-gnu-6.0SM/bin/aarch64-
-		TC="SM"
+		export CROSS_COMPILE=${HOME}/kernels/aarch64-linux-android-4.9-UBERTC/bin/aarch64-linux-android-
+		TC="UBER-4.9"
 		echo
-		echo "Compiling Using Saber Mod Toolchain"
+		echo "Compiling God's Kernel Using UBERTC-4.9 Toolchain"
+		break
+		;;		
+	3 )
+		export CROSS_COMPILE=${HOME}/kernels/aarch64-linux-gnu-6.0SM/bin/aarch64-
+		TC="SM-6.0"
+		echo
+		echo "Compiling God's Kernel Using Saber Mod-6.0 Toolchain"
 		break
 		;;
-	3 )
+	4 )
 		export CROSS_COMPILE=${HOME}/kernels/linaro-arm-eabi-5.2/bin/aarch64-
 		TC="LINARO"
 		echo
-		echo "Compiling Using Linaro Toolchain"
+		echo "Compiling God's Kernel Using Linaro-5.2 Toolchain"
 		break
 		;;
 	* )
@@ -120,10 +140,17 @@ case "$echoice" in
 		;;
 esac
 done
+echo -e "${restore}"
 
 echo
+echo -e "${red}"
+while read -p "Do you want to make clean Build of God's Kernel ? 
 
-while read -p "Do you want to make clean Build of God's Kernel (y/n)? " cchoice
+Yes Or No ? 
+
+Enter Y for Yes Or N for No
+
+" cchoice
 do
 case "$cchoice" in
 	y|Y )
@@ -142,10 +169,16 @@ case "$cchoice" in
 		;;
 esac
 done
+echo -e "${restore}"
 
 echo
+while read -p "Do you want to start Building God's Kernel ?
 
-while read -p "Do you want to start Building God's Kernel (y/n)?" dchoice
+Yes Or No ? 
+
+Enter Y for Yes Or N for No
+
+" dchoice
 do
 case "$dchoice" in
 	y|Y )
@@ -166,8 +199,6 @@ case "$dchoice" in
 		;;
 esac
 done
-
-
 echo -e "${green}"
 echo "------------------------------------------"
 echo "Build $GK_VER Completed :"
