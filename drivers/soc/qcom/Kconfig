@@ -671,9 +671,9 @@ config MSM_HOTPLUG
 
 config INTELLI_PLUG
     bool "Enable intelli-plug cpu hotplug driver"
-    default
+    default y
 	help
-	Generic Intelli-plug cpu hotplug driver for ARM SOCs
+	  Generic Intelli-plug cpu hotplug driver for ARM SOCs.
 	  
 config MSM_PERFORMANCE_HOTPLUG_ON
         bool "Hotplug functionality through msm_performance turned on"
