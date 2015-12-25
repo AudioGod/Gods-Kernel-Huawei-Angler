@@ -98,35 +98,44 @@ UBERTC-6.0---->(1)
 
 UBERTC-4.9---->(2)
 
-SaberMod-6.0-->(3)
+UBERTC-5.2---->(3)
 
-Linaro-5.2---->(4)
+SaberMod-6.0-->(4)
+
+Linaro-5.2---->(5)
 
 " echoice
 do
 case "$echoice" in
 	1 )
 		export CROSS_COMPILE=${HOME}/kernels/aarch64-linux-android-6.0-UBERTC/bin/aarch64-linux-android-
-		TC="UBER-6.0"
+		TC="UBERTC-6.0"
 		echo
 		echo "Compiling God's Kernel Using UBERTC-6.0 Toolchain"
 		break
 		;;
 	2 )
 		export CROSS_COMPILE=${HOME}/kernels/aarch64-linux-android-4.9-UBERTC/bin/aarch64-linux-android-
-		TC="UBER-4.9"
+		TC="UBERTC-4.9"
 		echo
 		echo "Compiling God's Kernel Using UBERTC-4.9 Toolchain"
 		break
-		;;		
+		;;
 	3 )
+		export CROSS_COMPILE=${HOME}/kernels/aarch64-linux-android-5.2-UBERTC/bin/aarch64-linux-android-
+		TC="UBERTC-5.2"
+		echo
+		echo "Compiling God's Kernel Using UBERTC-5.2 Toolchain"
+		break
+		;;			
+	4 )
 		export CROSS_COMPILE=${HOME}/kernels/aarch64-linux-gnu-6.0SM/bin/aarch64-
 		TC="SM-6.0"
 		echo
 		echo "Compiling God's Kernel Using Saber Mod-6.0 Toolchain"
 		break
 		;;
-	4 )
+	5 )
 		export CROSS_COMPILE=${HOME}/kernels/linaro-arm-eabi-5.2/bin/aarch64-
 		TC="LINARO"
 		echo
@@ -157,6 +166,32 @@ case "$cchoice" in
 		clean_all
 		echo
 		echo "Cleaning Sucess. Build Directory is clean now."
+		break
+		;;
+	n|N )
+		break
+		;;
+	* )
+		echo
+		echo "Invalid Selection try again !!"
+		echo
+		;;
+esac
+done
+echo -e "${restore}"
+
+echo -e "${cyan}"
+while read -p "Do you want to Generate Change-Log ?
+
+Yes Or No ? 
+
+Enter Y for Yes Or N for No
+
+" bchoice
+do
+case "$bchoice" in
+	y|Y )
+		./gk_changelog.sh
 		break
 		;;
 	n|N )
