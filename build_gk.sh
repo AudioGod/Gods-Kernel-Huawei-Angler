@@ -12,7 +12,7 @@ clear
 
 # Resources
 THREAD="-j$(grep -c ^processor /proc/cpuinfo)"
-KERNEL="Image"
+KERNEL="Image.gz"
 DTBIMAGE="dtb"
 DEFCONFIG="gk_angler_defconfig"
 
@@ -32,11 +32,14 @@ export KBUILD_BUILD_HOST=Sungsonic
 
 # Paths
 KERNEL_DIR=`pwd`
-REPACK_DIR="${HOME}/kernels/GK"
-PATCH_DIR="${HOME}/kernels/GK/patch"
-MODULES_DIR="${HOME}/kernels/GK/modules"
-ZIP_MOVE="${HOME}/kernels/GK-releases"
-ZIMAGE_DIR="${HOME}/kernels/Gods-Kernel-Huawei-Angler/arch/arm64/boot/"
+RESOURCE_DIR="$KERNEL_DIR/.."
+ANYKERNEL_DIR="$RESOURCE_DIR/GK-Angler-AnyKernel2"
+TOOLCHAIN_DIR="/home/adi/kernels"
+REPACK_DIR="$ANYKERNEL_DIR"
+PATCH_DIR="$ANYKERNEL_DIR/patch"
+MODULES_DIR="$ANYKERNEL_DIR/modules"
+ZIP_MOVE="$RESOURCE_DIR/GK-releases"
+ZIMAGE_DIR="$KERNEL_DIR/arch/arm64/boot"
 
 # Functions
 function clean_all {
@@ -55,32 +58,27 @@ function make_kernel {
 		echo
 		make $DEFCONFIG
 		make $THREAD
-		
+		cp -vr $ZIMAGE_DIR/$KERNEL $REPACK_DIR/zImage
 }
 
 function make_modules {
-		rm `echo $MODULES_DIR"/*"`
+		if [ -f "$MODULES_DIR/*.ko" ]; then
+			rm `echo $MODULES_DIR"/*.ko"`
+		fi
+		#find $MODULES_DIR/proprietary -name '*.ko' -exec cp -v {} $MODULES_DIR \;
 		find $KERNEL_DIR -name '*.ko' -exec cp -v {} $MODULES_DIR \;
 }
 
 function make_dtb {
-		$REPACK_DIR/tools/dtbToolCM -2 -o $REPACK_DIR/$DTBIMAGE -s 2048 -p scripts/dtc/ arch/arm64/boot/
+		$REPACK_DIR/tools/dtbToolCM -v2 -o $REPACK_DIR/$DTBIMAGE -s 2048 -p scripts/dtc/ arch/arm64/boot/dts/
 }
-
-function make_boot {
-		cp -vr $ZIMAGE_DIR/Image.gz-dtb ~/kernels/Gods-Kernel-Huawei-Angler/out/kernel/zImage
-		
-		. appendramdisk.sh
-}
-
 
 function make_zip {
-		cd ~/kernels/Gods-Kernel-Huawei-Angler/out
-		zip -r9 `echo $GK_VER`.zip *
+		cd $REPACK_DIR
+		zip -x@zipexclude -r9 `echo $GK_VER`.zip *
 		mv  `echo $GK_VER`.zip $ZIP_MOVE
 		cd $KERNEL_DIR
 }
-
 
 DATE_START=$(date +"%s")
 
@@ -220,7 +218,6 @@ case "$dchoice" in
 		make_kernel
 		make_dtb
 		make_modules
-		make_boot
 		make_zip
 		break
 		;;
