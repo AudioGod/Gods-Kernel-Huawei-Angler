@@ -17,7 +17,7 @@ DTBIMAGE="dtb"
 DEFCONFIG="gk_angler_defconfig"
 
 #GK Kernel Details
-VER="-R3-Angler-$(date +"%Y%m%d")"
+VER="-R4-Angler-$(date +"%Y%m%d")"
 GK_VER="$BASE_GK_VER$VER$TC"
 
 # Vars
